@@ -10,9 +10,13 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-const geometry = new THREE.BoxGeometry(400,400,400);
+const geometry = new THREE.BoxGeometry(50,50,50);
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 const cube = new THREE.Mesh( geometry, material );
+// cube.position= new Vector3(-30,-30,-30)
+cube.position.x = 100
+// cube.translateY= -400
+// cube.translateZ= 1000
 scene.add( cube );
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 const controls = new OrbitControls( camera, renderer.domElement );
@@ -31,6 +35,7 @@ controls.update();
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { Vector3 } from 'three';
 
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
@@ -47,9 +52,24 @@ let obj;
 // 	console.error( error );
 // } )
 loader.load( '/models/ftm/scene.gltf', function( gltf ) {
-	obj = gltf.scene;
-    obj.castShadow = false
-    obj.receiveShadow = false
+	// obj = gltf.scene.position(-3,-3,-3);
+    scene.add( gltf.scene );
+    console.log(obj)
+}, undefined, function ( error ) {
+	console.error( error );
+} )
+
+loader.load( '/models/ftm/scene.gltf', function( gltf ) {
+	obj = gltf.scene
+    // obj.position = new Vector3(-3,-3,-3);
+    scene.add( gltf.scene );
+    console.log(obj)
+}, undefined, function ( error ) {
+	console.error( error );
+} )
+loader.load( '/models/ftm/scene.gltf', function( gltf ) {
+	obj = gltf.scene
+    // obj.position = new Vector3(3,3,3);
     scene.add( gltf.scene );
     console.log(obj)
 }, undefined, function ( error ) {
@@ -61,6 +81,7 @@ loader.load( '/models/ftm/scene.gltf', function( gltf ) {
 function animate() {
 	requestAnimationFrame( animate );
     // cube.rotation.x += 0.01;
+    cube.position.x +=.01
     // camera.position.z-=1
     controls.update();
 	renderer.render( scene, camera );
