@@ -81,7 +81,7 @@ loader.load( '/models/ftm/scene.gltf', function( gltf ) {
 function animate() {
 	requestAnimationFrame( animate );
     // cube.rotation.x += 0.01;
-    cube.position.x +=.01
+    cube.position.x +=.1
     // camera.position.z-=1
     controls.update();
 	renderer.render( scene, camera );
